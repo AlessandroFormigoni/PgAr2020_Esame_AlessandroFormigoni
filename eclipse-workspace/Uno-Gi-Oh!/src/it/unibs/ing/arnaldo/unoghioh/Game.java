@@ -111,10 +111,13 @@ public class Game {
 	 */
 	public void sort() {
 		int tempVal;
+		for (Player player : players) {
+			player.setRemainingCards(player.cardsInHand());
+		}
 		for(int i=0;i<players.size()-1;i++) {
 			for (int j=1;j<players.size()-i;j++) {
-				if(players.get(j-1).cardsInHand() > players.get(j).cardsInHand()) {
-					tempVal = players.get(j-1).cardsInHand();
+				if(players.get(j-1).getRemainingCards() > players.get(j).getRemainingCards()) {
+					tempVal = players.get(j-1).getRemainingCards();
 					players.get(j-1).setRemainingCards(players.get(j).cardsInHand());
 					players.get(j).setRemainingCards(tempVal);
 					
