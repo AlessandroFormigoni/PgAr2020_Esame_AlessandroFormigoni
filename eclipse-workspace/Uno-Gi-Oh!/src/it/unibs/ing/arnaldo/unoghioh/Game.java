@@ -28,6 +28,12 @@ public class Game {
 					gameDeck.setDeck(discarded.getDeck());
 			}
 		}
+		for (Player player : players) {
+			player.setRemainingCards(player.cardsInHand());
+		}
+		sort();
+		for (Player player : players)
+			System.out.println(player.getRemainingCards()+" "+player.getName());
 		gameDeck = new Deck(gameDeck.getSize());
 	}
 	
@@ -99,10 +105,6 @@ public class Game {
 		System.out.println("Congratulazioni "+p.getName()+ " hai vinto!");
 		p.setScore(100);
 		hallOfFame.add(p);
-		sort();
-		for (Player player : players) {
-			System.out.println(player.getRemainingCards()+" "+player.getName());
-		}
 	}
 	
 	/**
@@ -110,17 +112,13 @@ public class Game {
 	 * @see computerphile
 	 */
 	public void sort() {
-		int tempVal;
-		for (Player player : players) {
-			player.setRemainingCards(player.cardsInHand());
-		}
+		Player tempPl;
 		for(int i=0;i<players.size()-1;i++) {
 			for (int j=1;j<players.size()-i;j++) {
 				if(players.get(j-1).getRemainingCards() > players.get(j).getRemainingCards()) {
-					tempVal = players.get(j-1).getRemainingCards();
-					players.get(j-1).setRemainingCards(players.get(j).cardsInHand());
-					players.get(j).setRemainingCards(tempVal);
-					
+					tempPl = players.get(j-1);
+					players.set(j-1,players.get(j));
+					players.set(j,tempPl);
 				}
 			}
 		}
